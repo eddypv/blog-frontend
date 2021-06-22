@@ -1,20 +1,7 @@
-import { useState } from "react"
 
-export  function Login(){
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+export  function Login({username, password, handleSubmitLogin, handleChangeUsername, handleChangePassword }){
     
-    const handleChangeUsername = ({target})=> {
-        setUsername(target.value)
-    }
-    const handleChangePassword = ({target})=>{
-        setPassword(target.value)
-    }
-    const handleSubmitLogin = (event)=>{
-        event.preventDefault()
-        console.log(username, password)
-    }
-    return (
+    return(
         <div>
             <div>
                 <h1>Log in to application</h1>
@@ -33,5 +20,7 @@ export  function Login(){
                 </div>
             </form>
         </div>
-    )
+    ) 
+    
+    
 }
