@@ -1,15 +1,15 @@
 import Blog from './Blog'
 
-export default function Blogs({blogs, handleSetLikes}){
+export default function Blogs({blogs, handleSetLikes, handleRemove, user}){
     
     
     return (
         <div >
             <div >
                 {blogs.map( item => {
-                    let user = ''
+                    let userBlog = {}
                     if(item.user){
-                        user = item.user.name;
+                        userBlog = item.user;
                     }
                     return <Blog 
                             key={item.id} 
@@ -18,8 +18,10 @@ export default function Blogs({blogs, handleSetLikes}){
                             author={item.author} 
                             likes={item.likes}
                             url={item.url}
+                            userBlog={userBlog}
                             user={user}
                             handleSetLikes={handleSetLikes}
+                            handleRemove={handleRemove}
                         />
                 })}
             </div>

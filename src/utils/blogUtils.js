@@ -13,5 +13,15 @@ const updateLikesBlogs  = (blogs, id, likes)=>{
     })
     return  updated
 }
+const removeBlog = (blogs, id)=>{
+    const blogsUpdated = blogs.filter(item =>{
+        if(item.id === id )
+            return false
+        else 
+            return true
+        
+    })
+    return blogsUpdated
+}
 
-export default {sortBlogs, updateLikesBlogs}
+export default {sortBlogs, updateLikesBlogs, removeBlog}

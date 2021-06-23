@@ -74,6 +74,25 @@ const App = () => {
     }
     removeNotification()
   } 
+  const handleRemoveBlog = async(id, title, author) =>{
+    try{
+      if(window.confirm(`Remove blog ${title} by ${author}`)){
+        await blogService.removeBlog(id)
+        setBlogs(blogUtils.removeBlog(blogs, id))
+        setNotificacion({
+          message:'The blog was delete',
+          type:'success'
+        }) 
+
+      }
+    }catch(error){
+      setNotificacion({
+        message:error.message,
+        type:'error'
+      }) 
+    }
+    removeNotification()
+  }
   const getAllBlogs = ()=>{
     blogService.getAll().then(blogs =>{
       setBlogs( blogUtils.sortBlogs(blogs) )
@@ -138,6 +157,8 @@ const App = () => {
           <Blogs
             blogs={blogs} 
             handleSetLikes={handleSetLikes}
+            handleRemove={handleRemoveBlog}
+            user={user}
           />
         </div>
       }

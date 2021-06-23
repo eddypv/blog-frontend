@@ -46,8 +46,27 @@ const setLikes = async( id, likes )=>{
     }
   }
 }
+const removeBlog = async (id)=>{
+  try{
+    const config ={
+      headers:{
+        Authorization:`Bearer ${token}`
+      }
+    }
+    await axios.delete(`${baseUrl}/${id}`, config)
+
+  }catch(error){
+    
+    if(error.response.data.error){
+      throw new Error(error.response.data.error)
+    }else{
+      throw new Error("service delete blog has errors")
+    }
+  }
+}
+
 const setToken = (newToken) =>{
   token = newToken
 }
 
-export default { getAll, setToken, AddBlog, setLikes }
+export default { getAll, setToken, AddBlog, setLikes, removeBlog }
