@@ -29,8 +29,25 @@ const AddBlog = async (blog)=>{
     
   }
 }
+const setLikes = async( id, likes )=>{
+  const config ={
+    headers:{
+      Authorization:`Bearer ${token}`
+    }
+  }
+  try{
+    const response = await axios.put(`${baseUrl}/${id}`, {likes}, config)
+    return response.data
+  }catch(error){
+    if(error.response.data.error){
+      throw new Error(error.response.data.error)
+    }else{
+      throw new Error("service update blog has errors")
+    }
+  }
+}
 const setToken = (newToken) =>{
   token = newToken
 }
 
-export default { getAll, setToken, AddBlog }
+export default { getAll, setToken, AddBlog, setLikes }

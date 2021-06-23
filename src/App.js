@@ -7,7 +7,7 @@ import AddBlog from './components/AddBlog'
 import Notification from './components/Notification'
 import UserInfo from './components/UserInfo'
 import Togglable  from './components/Togglable'
-
+import blogUtils from './utils/blogUtils'
 const DEFAULT_NOTIFICATION ={
   message:'',
   type:''
@@ -60,9 +60,23 @@ const App = () => {
     return success
     
   }
+  const handleSetLikes = async (id, likes)=>{
+    try{
+      const blogUpdated = await blogService.setLikes(id,likes)
+      const blogsUpdated = blogUtils.updateLikesBlogs(blogs, id, likes)
+      //setBlogs(blogUtils.sortBlogs(blogsUpdated))
+      setBlogs(blogsUpdated)
+    }catch(error){
+      setNotificacion({
+        message:error.message,
+        type:'error'
+      }) 
+    }
+    removeNotification()
+  } 
   const getAllBlogs = ()=>{
     blogService.getAll().then(blogs =>{
-      setBlogs( blogs )
+      setBlogs( blogUtils.sortBlogs(blogs) )
     }
     )
   }
@@ -123,6 +137,7 @@ const App = () => {
           </Togglable>
           <Blogs
             blogs={blogs} 
+            handleSetLikes={handleSetLikes}
           />
         </div>
       }

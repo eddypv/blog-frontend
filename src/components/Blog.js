@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-const Blog = ({title, author, url, likes, user}) => {
+const Blog = ({id,title, author, url, likes, user, handleSetLikes}) => {
   const [viewDetail, setViewDetail] = useState(false)
   const blogStyle = {
       paddingTop: 10,
@@ -11,7 +11,10 @@ const Blog = ({title, author, url, likes, user}) => {
   }
   const show = { display:'inline-block'}
   const hide= { display:'none'}
+  
   const handleToggle = () => setViewDetail(!viewDetail)
+
+  
   return (
     <div style={blogStyle}>
       <div>
@@ -19,7 +22,7 @@ const Blog = ({title, author, url, likes, user}) => {
         <div style={viewDetail ? show : hide}>
           <p>{title}</p>
           <p>{url}</p>
-          <p>{likes} <button>like</button></p>
+          <p>{likes} <button onClick={()=> handleSetLikes(id,likes+1)}>like</button></p>
           <p>{user}</p>
         </div>
       </div>

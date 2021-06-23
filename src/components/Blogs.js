@@ -1,6 +1,7 @@
 import Blog from './Blog'
 
-export default function Blogs({blogs}){
+export default function Blogs({blogs, handleSetLikes}){
+    
     
     return (
         <div >
@@ -12,11 +13,13 @@ export default function Blogs({blogs}){
                     }
                     return <Blog 
                             key={item.id} 
+                            id={item.id}
                             title={item.title} 
                             author={item.author} 
                             likes={item.likes}
                             url={item.url}
                             user={user}
+                            handleSetLikes={handleSetLikes}
                         />
                 })}
             </div>
