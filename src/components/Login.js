@@ -1,12 +1,29 @@
+import { useState } from "react"
 
-export default function Login({username, password, handleSubmitLogin, handleChangeUsername, handleChangePassword }){
-    
+export default function Login({ handleLogin }){
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+
+    const handleChangeUsername = ({target})=> {
+        setUsername(target.value)
+    }
+    const handleChangePassword = ({target})=>{
+        setPassword(target.value)
+    }
+    const handleSubmit = async (event)=>{
+        event.preventDefault()
+        const success = await handleLogin(username, password)
+        if(success){
+            setPassword('')
+            setUsername('')
+        }
+    }
     return(
         <div>
             <div>
                 <h1>Log in to application</h1>
             </div>
-            <form onSubmit={handleSubmitLogin}>
+            <form onSubmit={handleSubmit}>
                 <div>
                     <label>username</label>
                     <input type="text"  value={username} onChange={handleChangeUsername}/>

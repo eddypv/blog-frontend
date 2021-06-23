@@ -14,35 +14,24 @@ const DEFAULT_NOTIFICATION ={
 }
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  
   const [notificacion, setNotificacion] = useState(DEFAULT_NOTIFICATION)
     
-  const handleChangeUsername = ({target})=> {
-      setUsername(target.value)
-  }
-  const handleChangePassword = ({target})=>{
-      setPassword(target.value)
-  }
-  const handleSubmitLogin = async (event)=>{
+  const handleSubmitLogin = async (username, password)=>{
       try{
-          event.preventDefault()
           const user = await serviceLogin.login(username, password)
           setUser(user)
           blogService.setToken(user.token)
           window.localStorage.setItem("AppBlogList", JSON.stringify(user))
-          setUsername('')
-          setPassword('')
+          return true
       }catch(error){
           setNotificacion({
             message:error.message,
             type:'error'
           })
           removeNotification()
+          return false
       }
-      
   }
   const handleLogout = ()=>{
     window.localStorage.removeItem("AppBlogList")
@@ -110,11 +99,7 @@ const App = () => {
             type={notificacion.type}
           />
           <Login
-            username={username}
-            password={password}
-            handleSubmitLogin={handleSubmitLogin}
-            handleChangeUsername={handleChangeUsername}
-            handleChangePassword={handleChangePassword}
+            handleLogin={handleSubmitLogin}
           />
         </div>
         
