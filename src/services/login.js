@@ -6,8 +6,13 @@ const login= async (username, password)=>{
         const response = await axios.post(baseUrl,{username, password})
         return response.data
     }catch(error){
-        const customError = new Error(error.response.data.error)
-        throw customError
+        if(error.response.data.error){
+            const customError = new Error(error.response.data.error)
+            throw customError
+        }else{
+            throw new Error('Error service login')
+        }
+        
     }
     
 }

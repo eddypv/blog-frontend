@@ -1,5 +1,5 @@
 
-export  function Login({username, password, handleSubmitLogin, handleChangeUsername, handleChangePassword }){
+export default function Login({username, password, handleSubmitLogin, handleChangeUsername, handleChangePassword }){
     
     return(
         <div>

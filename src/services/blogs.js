@@ -10,8 +10,27 @@ const getAll = () => {
   const request = axios.get(baseUrl, config)
   return request.then(response => response.data)
 }
+const AddBlog = async (blog)=>{
+  const config ={
+    headers:{
+      Authorization:`Bearer ${token}`
+    }
+  }
+  try{
+    const response = await axios.post(baseUrl, blog,config)
+    return response.data
+  }catch(error){
+    if(error.response.data.error){
+      throw new Error(error.response.data.error)
+    }else{
+      throw new Error("service Add blog has errors")
+    }
+    
+    
+  }
+}
 const setToken = (newToken) =>{
   token = newToken
 }
 
-export default { getAll, setToken }
+export default { getAll, setToken, AddBlog }

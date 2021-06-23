@@ -1,0 +1,19 @@
+.Notification{
+    
+    border-width: 5px;
+    border-style: solid;
+    padding: 0.8rem;
+    font-weight: bold;
+    font-size: 20px;
+    background-color :#D3D3D3;
+    display: inline-block;
+    border-radius: 4px;
+}
+.success{
+    color: #0D7D06;
+    border-color: #0D7D06;
+}
+.error{
+    color: #FC1C1C;
+    border-color: #FC1C1C;
+}
