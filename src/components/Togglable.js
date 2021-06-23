@@ -1,8 +1,8 @@
 import { useState } from "react"
 
-const Togglable =({buttonText,children}) =>{
+const Togglable =({showText, closeText,children}) =>{
     const [visible, setVisible] = useState(false)
-    
+
     const hide = { display:'none'}
     const show = {display:'inline-block'}
 
@@ -10,12 +10,12 @@ const Togglable =({buttonText,children}) =>{
     return(
         <div>
             <div style={!visible ? show : hide}> 
-                <button onClick={handleToggle}>{buttonText}</button>
+                <button onClick={handleToggle}>{showText}</button>
             </div>
             <div style={visible ? show : hide }>
                 {children}
                 <div>
-                    <button onClick={handleToggle}>Close</button>
+                    <button onClick={handleToggle}>{closeText}</button>
                 </div>
             </div>
             

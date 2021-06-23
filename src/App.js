@@ -61,8 +61,9 @@ const App = () => {
     
   }
   const getAllBlogs = ()=>{
-    blogService.getAll().then(blogs =>
+    blogService.getAll().then(blogs =>{
       setBlogs( blogs )
+    }
     )
   }
   const removeNotification = () =>{
@@ -115,7 +116,7 @@ const App = () => {
             user={user}
             handleLogout= {handleLogout}
           />
-          <Togglable buttonText="create new blog">
+          <Togglable showText="create new blog" closeText="Close">
             <AddBlog 
               handleAddBlog= {handleAddBlog}
             />
@@ -123,9 +124,7 @@ const App = () => {
           <Blogs
             blogs={blogs} 
           />
-          
         </div>
-        
       }
     </div>
   )
