@@ -6,7 +6,7 @@ import serviceLogin from './services/login'
 import AddBlog from './components/AddBlog'
 import Notification from './components/Notification'
 import UserInfo from './components/UserInfo'
-
+import Togglable  from './components/Togglable'
 const DEFAULT_BLOG ={
   title:'',
   url:'',
@@ -141,15 +141,17 @@ const App = () => {
             user={user}
             handleLogout= {handleLogout}
           />
-          <AddBlog 
-            title={newBlog.title}
-            author= {newBlog.author}
-            url= {newBlog.url}
-            handleChangeTitle={handleChangeTitle}
-            handleChangeAuthor={handleChangeAuthor}
-            handleChangeUrl={handleChangeUrl}
-            handleSubmit= {handleSubmitAddBlog}
-          />
+          <Togglable buttonText="create new blog">
+            <AddBlog 
+              title={newBlog.title}
+              author= {newBlog.author}
+              url= {newBlog.url}
+              handleChangeTitle={handleChangeTitle}
+              handleChangeAuthor={handleChangeAuthor}
+              handleChangeUrl={handleChangeUrl}
+              handleSubmit= {handleSubmitAddBlog}
+            />
+          </Togglable>
           <Blogs
             blogs={blogs} 
           />
