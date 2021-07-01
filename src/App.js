@@ -16,29 +16,29 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const [notificacion, setNotificacion] = useState(DEFAULT_NOTIFICATION)
-    
-  const handleSubmitLogin = async (username, password)=>{
-      try{
-          const user = await serviceLogin.login(username, password)
-          setUser(user)
-          blogService.setToken(user.token)
-          window.localStorage.setItem("AppBlogList", JSON.stringify(user))
-          return true
-      }catch(error){
-          setNotificacion({
-            message:error.message,
-            type:'error'
-          })
-          removeNotification()
-          return false
-      }
+
+  const handleSubmitLogin = async (username, password) => {
+    try{
+      const user = await serviceLogin.login(username, password)
+      setUser(user)
+      blogService.setToken(user.token)
+      window.localStorage.setItem('AppBlogList', JSON.stringify(user))
+      return true
+    }catch(error){
+      setNotificacion({
+        message:error.message,
+        type:'error'
+      })
+      removeNotification()
+      return false
+    }
   }
-  const handleLogout = ()=>{
-    window.localStorage.removeItem("AppBlogList")
+  const handleLogout = () => {
+    window.localStorage.removeItem('AppBlogList')
     setUser(null)
   }
-  
-  const handleAddBlog = async (newBlog) =>{
+
+  const handleAddBlog = async (newBlog) => {
     let success = true
     try{
       const blogCreated = await blogService.AddBlog(newBlog)
@@ -46,21 +46,21 @@ const App = () => {
         message:`a new blog ${blogCreated.title} by ${blogCreated.author}`,
         type:'success'
       })
-      
+
       getAllBlogs()
-      
+
     }catch(error){
-        setNotificacion({
-          message:error.message,
-          type:'error'
-        })
-        success= false
+      setNotificacion({
+        message:error.message,
+        type:'error'
+      })
+      success= false
     }
     removeNotification()
     return success
-    
+
   }
-  const handleSetLikes = async (id, likes)=>{
+  const handleSetLikes = async (id, likes) => {
     try{
       await blogService.setLikes(id,likes)
       const blogsUpdated = blogUtils.updateLikesBlogs(blogs, id, likes)
@@ -70,11 +70,11 @@ const App = () => {
       setNotificacion({
         message:error.message,
         type:'error'
-      }) 
+      })
     }
     removeNotification()
-  } 
-  const handleRemoveBlog = async(id, title, author) =>{
+  }
+  const handleRemoveBlog = async(id, title, author) => {
     try{
       if(window.confirm(`Remove blog ${title} by ${author}`)){
         await blogService.removeBlog(id)
@@ -82,39 +82,39 @@ const App = () => {
         setNotificacion({
           message:'The blog was delete',
           type:'success'
-        }) 
+        })
 
       }
     }catch(error){
       setNotificacion({
         message:error.message,
         type:'error'
-      }) 
+      })
     }
     removeNotification()
   }
-  const getAllBlogs = ()=>{
-    blogService.getAll().then(blogs =>{
+  const getAllBlogs = () => {
+    blogService.getAll().then(blogs => {
       setBlogs( blogUtils.sortBlogs(blogs) )
     }
     )
   }
-  const removeNotification = () =>{
-    setTimeout(()=>{
+  const removeNotification = () => {
+    setTimeout(() => {
       setNotificacion(DEFAULT_NOTIFICATION)
     }, 5000)
   }
 
-  // load blog list 
+  // load blog list
   useEffect(() => {
     if(user !== null){
       getAllBlogs()
-    }       
+    }
   }, [user])
 
-  useEffect(()=>{
-    const userLocal = JSON.parse(window.localStorage.getItem("AppBlogList"))
-    
+  useEffect(() => {
+    const userLocal = JSON.parse(window.localStorage.getItem('AppBlogList'))
+
     if(userLocal !== null){
       blogService.setToken(userLocal.token)
       setUser(userLocal)
@@ -125,10 +125,10 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
-      { 
-        user === null && 
+      {
+        user === null &&
         <div>
-          <Notification 
+          <Notification
             message={notificacion.message}
             type={notificacion.type}
           />
@@ -136,26 +136,26 @@ const App = () => {
             handleLogin={handleSubmitLogin}
           />
         </div>
-        
+
       }
       {
         user !== null &&
         <div>
-          <Notification  
-            type={notificacion.type} 
-            message={notificacion.message} 
+          <Notification
+            type={notificacion.type}
+            message={notificacion.message}
           />
-          <UserInfo 
+          <UserInfo
             user={user}
             handleLogout= {handleLogout}
           />
           <Togglable showText="create new blog" closeText="Close">
-            <AddBlog 
+            <AddBlog
               handleAddBlog= {handleAddBlog}
             />
           </Togglable>
           <Blogs
-            blogs={blogs} 
+            blogs={blogs}
             handleSetLikes={handleSetLikes}
             handleRemove={handleRemoveBlog}
             user={user}
