@@ -68,5 +68,5 @@ const removeBlog = async (id)=>{
 const setToken = (newToken) =>{
   token = newToken
 }
-
-export default { getAll, setToken, AddBlog, setLikes, removeBlog }
+const services ={ getAll, setToken, AddBlog, setLikes, removeBlog }
+export default services

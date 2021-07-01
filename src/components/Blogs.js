@@ -1,6 +1,7 @@
 import Blog from './Blog'
+import propType  from 'prop-types'
 
-export default function Blogs({blogs, handleSetLikes, handleRemove, user}){
+function Blogs({blogs=[], handleSetLikes, handleRemove, user}){
     
     
     return (
@@ -28,3 +29,11 @@ export default function Blogs({blogs, handleSetLikes, handleRemove, user}){
         </div>
     )
 }
+Blogs.propTypes ={
+    blogs:propType.array,
+    handleSetLikes:propType.func.isRequired,
+    handleRemove:propType.func.isRequired,
+    user:propType.object.isRequired
+}
+
+export default Blogs

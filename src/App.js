@@ -62,7 +62,7 @@ const App = () => {
   }
   const handleSetLikes = async (id, likes)=>{
     try{
-      const blogUpdated = await blogService.setLikes(id,likes)
+      await blogService.setLikes(id,likes)
       const blogsUpdated = blogUtils.updateLikesBlogs(blogs, id, likes)
       //setBlogs(blogUtils.sortBlogs(blogsUpdated))
       setBlogs(blogsUpdated)

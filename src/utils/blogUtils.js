@@ -23,5 +23,6 @@ const removeBlog = (blogs, id)=>{
     })
     return blogsUpdated
 }
+const utils = {sortBlogs, updateLikesBlogs, removeBlog}
 
-export default {sortBlogs, updateLikesBlogs, removeBlog}
+export default utils

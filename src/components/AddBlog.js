@@ -1,5 +1,5 @@
 import { useState } from "react"
-
+import propTypes from 'prop-types'
 const DEFAULT_BLOG ={
     title:'',
     url:'',
@@ -47,5 +47,8 @@ const AddBlog = ({ handleAddBlog})=>{
             </form>
         </div>
     ) 
+}
+AddBlog.propTypes ={
+    handleAddBlog:propTypes.func.isRequired
 }
 export default AddBlog
