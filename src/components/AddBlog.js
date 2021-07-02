@@ -31,15 +31,15 @@ const AddBlog = ({ handleAddBlog }) => {
       <form onSubmit={handleSubmit}>
         <div>
           <label>title</label>
-          <input type="text" value={newBlog.title} onChange={handleChangeTitle} />
+          <input id="title" type="text" value={newBlog.title} onChange={handleChangeTitle} />
         </div>
         <div>
           <label>author</label>
-          <input type="text" value={newBlog.author} onChange={handleChangeAuthor} />
+          <input id="author" type="text" value={newBlog.author} onChange={handleChangeAuthor} />
         </div>
         <div>
           <label>url</label>
-          <input type="text" value={newBlog.url}  onChange={handleChangeUrl}/>
+          <input id="url" type="text" value={newBlog.url}  onChange={handleChangeUrl}/>
         </div>
         <div>
           <button>Create</button>
