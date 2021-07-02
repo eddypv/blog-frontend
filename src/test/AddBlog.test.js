@@ -1,6 +1,5 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
-import { prettyDOM } from '@testing-library/dom'
 import '@testing-library/jest-dom/extend-expect'
 import AddBlog from '../components/AddBlog'
 
