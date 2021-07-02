@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import propType from 'prop-types'
 
-const Blog = ({ id,title, author, url, likes, userBlog, user, handleSetLikes, handleRemove }) => {
+const Blog = ({ id,title, author, url='', likes=0, userBlog={}, user={}, handleSetLikes, handleRemove }) => {
   const [viewDetail, setViewDetail] = useState(false)
   const blogStyle = {
     paddingTop: 10,
@@ -19,9 +19,10 @@ const Blog = ({ id,title, author, url, likes, userBlog, user, handleSetLikes, ha
   return (
     <div style={blogStyle}>
       <div>
-        <div>{title} {author} <button onClick={handleToggle}> {viewDetail ? 'hide': 'view'}</button></div>
+        <div>{title} {author}<button onClick={handleToggle}> {viewDetail ? 'hide': 'view'}</button></div>
         <div style={viewDetail ? show : hide}>
           <p>{title}</p>
+          <p>{author}</p>
           <p>{url}</p>
           <p>{likes} <button onClick={() => handleSetLikes(id,likes+1)}>like</button></p>
           <p>{userBlog.name || ''}</p>
@@ -38,12 +39,12 @@ Blog.propTypes ={
   id:propType.string.isRequired,
   title:propType.string.isRequired,
   author:propType.string.isRequired,
-  url: propType.string.isRequired,
-  likes: propType.number.isRequired,
-  userBlog:propType.object.isRequired,
-  user:propType.object.isRequired,
-  handleSetLikes:propType.func.isRequired,
-  handleRemove:propType.func.isRequired
+  url: propType.string,
+  likes: propType.number,
+  userBlog:propType.object,
+  user:propType.object,
+  handleSetLikes:propType.func,
+  handleRemove:propType.func
 
 }
 export default Blog
