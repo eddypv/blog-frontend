@@ -10,12 +10,12 @@ const Togglable =({ showText, closeText,children }) => {
   return(
     <div>
       <div style={!visible ? show : hide}>
-        <button onClick={handleToggle}>{showText}</button>
+        <button className="togglable-button-show" onClick={handleToggle}>{showText}</button>
       </div>
       <div style={visible ? show : hide }>
         {children}
         <div>
-          <button onClick={handleToggle}>{closeText}</button>
+          <button  className="togglable-button-hide" onClick={handleToggle}>{closeText}</button>
         </div>
       </div>
 

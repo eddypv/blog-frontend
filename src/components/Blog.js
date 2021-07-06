@@ -17,14 +17,14 @@ const Blog = ({ id,title, author, url='', likes=0, userBlog={}, user={}, handleS
 
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className="Blog-item">
       <div>
-        <div>{title} {author}<button onClick={handleToggle}> {viewDetail ? 'hide': 'view'}</button></div>
+        <div>{title} {author}<button className="button-show-hide" onClick={handleToggle}> {viewDetail ? 'hide': 'view'}</button></div>
         <div style={viewDetail ? show : hide}>
           <p>{title}</p>
           <p>{author}</p>
           <p>{url}</p>
-          <p>{likes} <button onClick={() => handleSetLikes(id,likes+1)}>like</button></p>
+          <p data-testid="Blog-likes"><span>{likes}</span> <button className="button-likes" onClick={() => handleSetLikes(id,likes+1)}>like</button></p>
           <p>{userBlog.name || ''}</p>
           {userBlog.username === user.username && <button onClick={() => handleRemove(id, title, author) }>Remove</button>}
         </div>
