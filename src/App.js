@@ -150,7 +150,6 @@ const App = () => {
             />
           </Togglable>
           <Blogs
-            blogs={blogs}
             handleSetLikes={handleSetLikes}
             handleRemove={handleRemoveBlog}
             user={user}

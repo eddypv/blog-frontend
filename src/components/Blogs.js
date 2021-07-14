@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Blog from './Blog'
 import propType  from 'prop-types'
+import { useSelector, useDispatch } from 'react-redux'
+import { initBlogs } from '../reducers/blogReducer'
 
-function Blogs({ blogs=[], handleSetLikes, handleRemove, user }){
-
-
+function Blogs({ handleSetLikes, handleRemove, user }){
+  const blogs = useSelector(state => state.blogs)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(initBlogs())
+  },[])
   return (
     <div >
       <div >
@@ -31,7 +36,7 @@ function Blogs({ blogs=[], handleSetLikes, handleRemove, user }){
   )
 }
 Blogs.propTypes ={
-  blogs:propType.array,
+  //blogs:propType.array,
   handleSetLikes:propType.func.isRequired,
   handleRemove:propType.func.isRequired,
   user:propType.object.isRequired
