@@ -1,6 +1,9 @@
 import './Notification.css'
 import React from 'react'
-export default function Notification({ message, type }){
+import { useSelector } from 'react-redux'
+export default function Notification(){
+  const notification = useSelector(state => state)
+  const { message, type } = notification
   if(message.trim() === ''){
     return null
   }

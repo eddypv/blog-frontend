@@ -8,6 +8,8 @@ import Notification from './components/Notification'
 import UserInfo from './components/UserInfo'
 import Togglable  from './components/Togglable'
 import blogUtils from './utils/blogUtils'
+import { useDispatch } from 'react-redux'
+import { setNotification as setNotify } from './reducers/notificationReducer'
 const DEFAULT_NOTIFICATION ={
   message:'',
   type:''
@@ -15,8 +17,7 @@ const DEFAULT_NOTIFICATION ={
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
-  const [notificacion, setNotificacion] = useState(DEFAULT_NOTIFICATION)
-
+  const dispatch = useDispatch()
   const handleSubmitLogin = async (username, password) => {
     try{
       const user = await serviceLogin.login(username, password)
@@ -25,10 +26,10 @@ const App = () => {
       window.localStorage.setItem('AppBlogList', JSON.stringify(user))
       return true
     }catch(error){
-      setNotificacion({
-        message:error.message,
-        type:'error'
-      })
+      dispatch(
+        setNotify(error.message,'error'
+        )
+      )
       removeNotification()
       return false
     }
@@ -42,18 +43,17 @@ const App = () => {
     let success = true
     try{
       const blogCreated = await blogService.AddBlog(newBlog)
-      setNotificacion({
-        message:`a new blog ${blogCreated.title} by ${blogCreated.author}`,
-        type:'success'
-      })
-
+      dispatch(setNotify(
+        `a new blog ${blogCreated.title} by ${blogCreated.author}`,
+        'success'
+      ))
       getAllBlogs()
 
     }catch(error){
-      setNotificacion({
-        message:error.message,
-        type:'error'
-      })
+      dispatch(
+        setNotify(error.message,'error'
+        )
+      )
       success= false
     }
     removeNotification()
@@ -67,10 +67,10 @@ const App = () => {
       //setBlogs(blogUtils.sortBlogs(blogsUpdated))
       setBlogs(blogsUpdated)
     }catch(error){
-      setNotificacion({
-        message:error.message,
-        type:'error'
-      })
+      dispatch(
+        setNotify(error.message,'error'
+        )
+      )
     }
     removeNotification()
   }
@@ -79,17 +79,16 @@ const App = () => {
       if(window.confirm(`Remove blog ${title} by ${author}`)){
         await blogService.removeBlog(id)
         setBlogs(blogUtils.removeBlog(blogs, id))
-        setNotificacion({
-          message:'The blog was delete',
-          type:'success'
-        })
+        dispatch(
+          setNotify('The blog was delete','success')
+        )
 
       }
     }catch(error){
-      setNotificacion({
-        message:error.message,
-        type:'error'
-      })
+      dispatch(
+        setNotify(error.message,'error'
+        )
+      )
     }
     removeNotification()
   }
@@ -101,7 +100,9 @@ const App = () => {
   }
   const removeNotification = () => {
     setTimeout(() => {
-      setNotificacion(DEFAULT_NOTIFICATION)
+      dispatch(
+        setNotify(DEFAULT_NOTIFICATION.message, DEFAULT_NOTIFICATION.type)
+      )
     }, 5000)
   }
 
@@ -128,10 +129,7 @@ const App = () => {
       {
         user === null &&
         <div>
-          <Notification
-            message={notificacion.message}
-            type={notificacion.type}
-          />
+          <Notification />
           <Login
             handleLogin={handleSubmitLogin}
           />
@@ -141,10 +139,7 @@ const App = () => {
       {
         user !== null &&
         <div>
-          <Notification
-            type={notificacion.type}
-            message={notificacion.message}
-          />
+          <Notification />
           <UserInfo
             user={user}
             handleLogout= {handleLogout}
