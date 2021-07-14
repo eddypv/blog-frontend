@@ -1,14 +1,16 @@
 import React,{ useState } from 'react'
-import propTypes from 'prop-types'
+import { addBlog } from '../reducers/blogReducer'
+import { setNotification } from '../reducers/notificationReducer'
+import { useDispatch } from 'react-redux'
 const DEFAULT_BLOG ={
   title:'',
   url:'',
   author:''
 }
-const AddBlog = ({ handleAddBlog }) => {
+const AddBlog = () => {
 
   const [newBlog, setNewBlog] = useState(DEFAULT_BLOG)
-
+  const dispatch = useDispatch()
   const handleChangeTitle = ({ target }) => {
     setNewBlog({ ...newBlog, title:target.value })
   }
@@ -19,12 +21,20 @@ const AddBlog = ({ handleAddBlog }) => {
     setNewBlog({ ...newBlog, author:target.value })
   }
   const handleSubmit = async (event) => {
-    event.preventDefault()
-    const success = await handleAddBlog(newBlog)
-    if(success){
+    try{
+      event.preventDefault()
+      await dispatch(addBlog(newBlog))
+      await dispatch(setNotification(
+        `a new blog ${newBlog.title} by ${newBlog.author}`,
+        'success'
+      ))
       setNewBlog(DEFAULT_BLOG)
+    }catch(error){
+      dispatch(setNotification(error.message,'error'))
     }
+
   }
+
   return(
     <div>
       <h2>Create New</h2>
@@ -48,7 +58,5 @@ const AddBlog = ({ handleAddBlog }) => {
     </div>
   )
 }
-AddBlog.propTypes ={
-  handleAddBlog:propTypes.func.isRequired
-}
+
 export default AddBlog

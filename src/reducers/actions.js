@@ -4,5 +4,6 @@ export const notificationActions ={
 export const blogActions ={
   INIT_BLOGS:'@blog/init',
   SET_LIKES:'@blog/set_likes',
-  REMOVE:'@blog/remove'
+  REMOVE:'@blog/remove',
+  ADD:'@blog/add'
 }

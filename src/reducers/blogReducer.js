@@ -1,3 +1,4 @@
+
 import blogService from '../services/blogs'
 import { blogActions } from './actions'
 
@@ -23,6 +24,10 @@ export const blogReducer = (state=[], action) => {
         return item
       }
     })
+  }
+
+  case blogActions.ADD:{
+    return state.concat(action.payload.blog)
   }
   default: return state
   }
@@ -59,6 +64,18 @@ export const removeBlog = (id) => {
       type:blogActions.REMOVE,
       payload:{
         id
+      }
+    })
+  }
+}
+
+export const addBlog = (blog) => {
+  return async dispatch => {
+    const createdBlog = await blogService.AddBlog(blog)
+    dispatch({
+      type:blogActions.ADD,
+      payload:{
+        blog:createdBlog
       }
     })
   }

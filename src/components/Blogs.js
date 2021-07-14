@@ -57,9 +57,6 @@ function Blogs({  user }){
   )
 }
 Blogs.propTypes ={
-  //blogs:propType.array,
-  //handleSetLikes:propType.func.isRequired,
-  //handleRemove:propType.func.isRequired,
   user:propType.object.isRequired
 }
 
