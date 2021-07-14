@@ -2,11 +2,13 @@ import React, { useEffect } from 'react'
 import Blog from './Blog'
 import propType  from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
-import { initBlogs, setLikes } from '../reducers/blogReducer'
+import { initBlogs, setLikes, removeBlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
-function Blogs({  handleRemove, user }){
+
+function Blogs({  user }){
   const blogs = useSelector(state => state.blogs)
   const dispatch = useDispatch()
+
   useEffect(() => {
     dispatch(initBlogs())
   },[])
@@ -14,6 +16,17 @@ function Blogs({  handleRemove, user }){
   const handleSetLikes = (id, likes) => {
     try{
       dispatch(setLikes(id, likes))
+    }catch(error){
+      dispatch(setNotification(error.message,'error'))
+    }
+  }
+
+  const handleRemove = async(id, title, author) => {
+    try{
+      if(window.confirm(`Remove blog ${title} by ${author}`)){
+        dispatch(removeBlog(id))
+        dispatch(setNotification('The blog was delete','success'))
+      }
     }catch(error){
       dispatch(setNotification(error.message,'error'))
     }
@@ -46,7 +59,7 @@ function Blogs({  handleRemove, user }){
 Blogs.propTypes ={
   //blogs:propType.array,
   //handleSetLikes:propType.func.isRequired,
-  handleRemove:propType.func.isRequired,
+  //handleRemove:propType.func.isRequired,
   user:propType.object.isRequired
 }
 

@@ -7,7 +7,6 @@ import AddBlog from './components/AddBlog'
 import Notification from './components/Notification'
 import UserInfo from './components/UserInfo'
 import Togglable  from './components/Togglable'
-import blogUtils from './utils/blogUtils'
 import { useDispatch } from 'react-redux'
 import { setNotification as setNotify } from './reducers/notificationReducer'
 
@@ -16,7 +15,6 @@ const DEFAULT_NOTIFICATION ={
   type:''
 }
 const App = () => {
-  const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const dispatch = useDispatch()
   const handleSubmitLogin = async (username, password) => {
@@ -61,29 +59,10 @@ const App = () => {
     return success
 
   }
-  const handleRemoveBlog = async(id, title, author) => {
-    try{
-      if(window.confirm(`Remove blog ${title} by ${author}`)){
-        await blogService.removeBlog(id)
-        setBlogs(blogUtils.removeBlog(blogs, id))
-        dispatch(
-          setNotify('The blog was delete','success')
-        )
 
-      }
-    }catch(error){
-      dispatch(
-        setNotify(error.message,'error'
-        )
-      )
-    }
-    removeNotification()
-  }
   const getAllBlogs = () => {
-    blogService.getAll().then(blogs => {
-      setBlogs( blogUtils.sortBlogs(blogs) )
-    }
-    )
+
+
   }
   const removeNotification = () => {
     setTimeout(() => {
@@ -93,12 +72,6 @@ const App = () => {
     }, 5000)
   }
 
-  // load blog list
-  useEffect(() => {
-    if(user !== null){
-      getAllBlogs()
-    }
-  }, [user])
 
   useEffect(() => {
     const userLocal = JSON.parse(window.localStorage.getItem('AppBlogList'))
@@ -137,7 +110,6 @@ const App = () => {
             />
           </Togglable>
           <Blogs
-            handleRemove={handleRemoveBlog}
             user={user}
           />
         </div>

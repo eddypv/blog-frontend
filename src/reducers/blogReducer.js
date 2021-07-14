@@ -5,12 +5,21 @@ export const blogReducer = (state=[], action) => {
   switch(action.type){
   case blogActions.INIT_BLOGS:
     return [...action.payload.blogs]
+
   case blogActions.SET_LIKES:{
     const blog = action.payload.blog
     return state.map(item => {
       if(blog.id === item.id){
         return { ...item, likes:blog.likes }
       }else{
+        return item
+      }
+    })
+  }
+
+  case blogActions.REMOVE:{
+    return state.filter(item => {
+      if(action.payload.id !== item.id){
         return item
       }
     })
@@ -39,6 +48,18 @@ export const setLikes = (id, likes) => {
       type:blogActions.SET_LIKES,
       payload:{ blog }
 
+    })
+  }
+}
+
+export const removeBlog = (id) => {
+  return async dispatch => {
+    await blogService.removeBlog(id)
+    dispatch({
+      type:blogActions.REMOVE,
+      payload:{
+        id
+      }
     })
   }
 }
