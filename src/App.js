@@ -10,6 +10,7 @@ import Togglable  from './components/Togglable'
 import blogUtils from './utils/blogUtils'
 import { useDispatch } from 'react-redux'
 import { setNotification as setNotify } from './reducers/notificationReducer'
+
 const DEFAULT_NOTIFICATION ={
   message:'',
   type:''
@@ -59,20 +60,6 @@ const App = () => {
     removeNotification()
     return success
 
-  }
-  const handleSetLikes = async (id, likes) => {
-    try{
-      await blogService.setLikes(id,likes)
-      const blogsUpdated = blogUtils.updateLikesBlogs(blogs, id, likes)
-      //setBlogs(blogUtils.sortBlogs(blogsUpdated))
-      setBlogs(blogsUpdated)
-    }catch(error){
-      dispatch(
-        setNotify(error.message,'error'
-        )
-      )
-    }
-    removeNotification()
   }
   const handleRemoveBlog = async(id, title, author) => {
     try{
@@ -150,7 +137,6 @@ const App = () => {
             />
           </Togglable>
           <Blogs
-            handleSetLikes={handleSetLikes}
             handleRemove={handleRemoveBlog}
             user={user}
           />

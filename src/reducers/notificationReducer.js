@@ -4,7 +4,7 @@ const DEFAULT_STATE = {
   type:''
 }
 export const notificationReducer = (state=DEFAULT_STATE, action) => {
-  console.log(action)
+
   switch(action.type ){
   case notificationActions.SET_NOTIFICATION:
     return action.payload
@@ -13,14 +13,22 @@ export const notificationReducer = (state=DEFAULT_STATE, action) => {
 }
 
 export const setNotification= (message, type) => {
-  console.log(message, type)
-  return {
-    type:notificationActions.SET_NOTIFICATION,
-    payload:{
-      message,
-      type
+
+  return dispatch => {
+    let action = {
+      type:notificationActions.SET_NOTIFICATION,
+      payload:{
+        message,
+        type
+      }
     }
+    dispatch(action)
+    action.payload = DEFAULT_STATE
+    setTimeout(() => {
+      dispatch(action)
+    }, 5000)
   }
+
 
 }
 
