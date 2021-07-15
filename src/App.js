@@ -5,7 +5,7 @@ import blogService from './services/blogs'
 import Login from './components/Login'
 import AddBlog from './components/AddBlog'
 import Notification from './components/Notification'
-import NavBar from './components/NavBar'
+import Navigation from './components/Navigation'
 import Togglable  from './components/Togglable'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUser, getUsers } from './reducers/userReducer'
@@ -48,7 +48,7 @@ const App = () => {
       <h2>blogs</h2>
       <div>
         <Notification />
-        <NavBar user={user} />
+        <Navigation user={user} />
         <Switch>
           <Route path='/login'>
             <Login/>
