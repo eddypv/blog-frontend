@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react'
-import Blog from './Blog'
+import React from 'react'
 import propType  from 'prop-types'
-import { useSelector, useDispatch } from 'react-redux'
-import { initBlogs, setLikes, removeBlog } from '../reducers/blogReducer'
-import { setNotification } from '../reducers/notificationReducer'
+import { Link } from 'react-router-dom'
 
-function Blogs({  user }){
-  const blogs = useSelector(state => state.blogs)
-  const dispatch = useDispatch()
+function Blogs({ blogs }){
 
-  useEffect(() => {
-    dispatch(initBlogs())
-  },[])
-
+  //const dispatch = useDispatch()
+  const blogStyle = {
+    paddingTop: 10,
+    paddingLeft: 2,
+    border: 'solid',
+    borderWidth: 1,
+    marginBottom: 5
+  }
+  /*
   const handleSetLikes = (id, likes) => {
     try{
       dispatch(setLikes(id, likes))
@@ -30,12 +30,12 @@ function Blogs({  user }){
     }catch(error){
       dispatch(setNotification(error.message,'error'))
     }
-  }
+  }*/
   return (
     <div >
       <div >
         {blogs.map( item => {
-          let userBlog = {}
+          /*let userBlog = {}
           if(item.user){
             userBlog = item.user
           }
@@ -49,15 +49,19 @@ function Blogs({  user }){
             userBlog={userBlog}
             user={user}
             handleSetLikes={handleSetLikes}
-            handleRemove={handleRemove}
-          />
+            handleRemove={handleRemove}*/
+          return(
+            <div key={item.id} style={blogStyle}>
+              <Link to="">{item.title} {item.author}</Link>
+            </div>
+          )
         })}
       </div>
     </div>
   )
 }
 Blogs.propTypes ={
-  user:propType.object.isRequired
+  blogs:propType.array.isRequired
 }
 
 export default Blogs

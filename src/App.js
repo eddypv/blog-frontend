@@ -8,6 +8,7 @@ import UserInfo from './components/UserInfo'
 import Togglable  from './components/Togglable'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUser, getUsers } from './reducers/userReducer'
+import { initBlogs } from './reducers/blogReducer'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import Users from './components/Users'
 import UserBlogs from './components/UserBlogs'
@@ -16,12 +17,14 @@ const App = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user.userLoggedIn)
   const users = useSelector(state => state.user.users)
+  const blogs = useSelector(state => state.blogs)
   const userBlogsMatch = useRouteMatch('/users/:userId')
   const userBlogs = userBlogsMatch ? users.find(item => item.id === userBlogsMatch.params.userId): null
   useEffect(() => {
     const userLocal = JSON.parse(window.localStorage.getItem('AppBlogList'))
     if(userLocal !== null){
       blogService.setToken(userLocal.token)
+      dispatch(initBlogs())
       dispatch(setUser(userLocal))
       dispatch(getUsers())
     }
@@ -55,7 +58,7 @@ const App = () => {
                   <Togglable showText="create new blog" closeText="Close">
                     <AddBlog/>
                   </Togglable>
-                  <Blogs user={user}/>
+                  <Blogs blogs={blogs} />
                 </Route>
               </Switch>
             </div>
