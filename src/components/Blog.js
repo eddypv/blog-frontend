@@ -3,8 +3,9 @@ import propType from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { setLikes,removeBlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
+import { Card, Button } from 'react-bootstrap'
 
-const Blog = ({ blog={}, user={} }) => {
+const Blog = ({ blog, user={} }) => {
   let userBlog ={}
   const dispatch = useDispatch()
 
@@ -26,7 +27,7 @@ const Blog = ({ blog={}, user={} }) => {
       dispatch(setNotification(error.message,'error'))
     }
   }
-  if(!blog){
+  if(!blog ){
     return null
   }
   if(blog){
@@ -35,15 +36,17 @@ const Blog = ({ blog={}, user={} }) => {
     }
     return (
       <div className="Blog-item">
-        <div>
-          <div >
-            <h2>{blog.title} {blog.author}</h2>
-            <a href={blog.url}>{blog.url}</a>
-            <p data-testid="Blog-likes"><span>{blog.likes}</span> <button className="button-likes" onClick={handleSetLikes}>like</button></p>
-            <p>added by {userBlog.name || ''}</p>
-            {userBlog.username === user.username && <button onClick={() => handleRemove(blog.id, blog.title, blog.author) }>Remove</button>}
-          </div>
-        </div>
+        <Card style={{ width: '18rem' }}>
+          <Card.Body>
+            <Card.Title>{blog.title} {blog.author}</Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">added by {userBlog.name || ''}</Card.Subtitle>
+            <Card.Text>
+              {blog.likes} <Button variant="primary" onClick={handleSetLikes} >Like</Button>
+              {userBlog.username === user.username && <button onClick={() => handleRemove(blog.id, blog.title, blog.author) }>Remove</button>}
+            </Card.Text>
+            <Card.Link href={blog.url}>Go to Url</Card.Link>
+          </Card.Body>
+        </Card>
       </div>
     )
   }

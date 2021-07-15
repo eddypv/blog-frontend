@@ -1,17 +1,18 @@
 import React from 'react'
+import { ListGroup } from 'react-bootstrap'
 
 const UserBlogs = ({ userBlogs }) => {
-  console.log(userBlogs)
+
   if(userBlogs){
     return (
       <div>
         <h2>{userBlogs.name}</h2>
         <h3>added blogs</h3>
-        <ul>
+        <ListGroup>
           {userBlogs.blogs.map(item => {
-            return <li key={item.id}>{item.title}</li>
+            return <ListGroup.Item key={item.id}>{item.title}</ListGroup.Item>
           })}
-        </ul>
+        </ListGroup>
       </div>
     )
   }
