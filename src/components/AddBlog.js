@@ -2,6 +2,8 @@ import React,{ useState } from 'react'
 import { addBlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router'
+
 const DEFAULT_BLOG ={
   title:'',
   url:'',
@@ -11,6 +13,7 @@ const AddBlog = () => {
 
   const [newBlog, setNewBlog] = useState(DEFAULT_BLOG)
   const dispatch = useDispatch()
+  const history = useHistory()
   const handleChangeTitle = ({ target }) => {
     setNewBlog({ ...newBlog, title:target.value })
   }
@@ -29,6 +32,7 @@ const AddBlog = () => {
         'success'
       ))
       setNewBlog(DEFAULT_BLOG)
+      history.push('/')
     }catch(error){
       dispatch(setNotification(error.message,'error'))
     }

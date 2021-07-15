@@ -15,6 +15,12 @@ export const userReducer = (state = initial, action) => {
       users:[...state.users]
     }
   }
+  case userActions.LOGOUT:{
+    return {
+      userLoggedIn: null,
+      users:[]
+    }
+  }
   case userActions.GET_USERS: {
     return {
       userLoggedIn: { ...state.userLoggedIn },
@@ -48,8 +54,8 @@ export const login=(username, password) => {
 export const logout = () => {
   window.localStorage.removeItem('AppBlogList')
   return {
-    type:userActions.SET,
-    payload:{ user:null }
+    type:userActions.LOGOUT,
+    payload:{ }
   }
 }
 export const getUsers = () => {

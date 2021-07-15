@@ -1,13 +1,16 @@
 import { useState } from 'react'
-
 import React from 'react'
 import { login } from '../reducers/userReducer'
 import { useDispatch } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
+import { useHistory } from 'react-router-dom'
+import { blogUrls } from '../utils/urls'
 function Login(){
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const dispatch= useDispatch()
+  const history = useHistory()
+
   const handleChangeUsername = ({ target }) => {
     setUsername(target.value)
   }
@@ -20,14 +23,10 @@ function Login(){
       await dispatch(login(username, password))
       setPassword('')
       setUsername('')
+      history.push(blogUrls.HOME)
     }catch(error){
-      dispatch(
-        setNotification(error.message,'error'
-        )
-      )
+      dispatch(setNotification(error.message,'error'))
     }
-
-
   }
   return(
     <div>
