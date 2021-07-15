@@ -3,7 +3,7 @@ import { addBlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
-
+import { Form,Button } from 'react-bootstrap'
 const DEFAULT_BLOG ={
   title:'',
   url:'',
@@ -38,27 +38,41 @@ const AddBlog = () => {
     }
 
   }
-
   return(
     <div>
       <h2>Create New</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>title</label>
-          <input id="title" type="text" value={newBlog.title} onChange={handleChangeTitle} />
-        </div>
-        <div>
-          <label>author</label>
-          <input id="author" type="text" value={newBlog.author} onChange={handleChangeAuthor} />
-        </div>
-        <div>
-          <label>url</label>
-          <input id="url" type="text" value={newBlog.url}  onChange={handleChangeUrl}/>
-        </div>
-        <div>
-          <button>Create</button>
-        </div>
-      </form>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3" controlId="formBasicTitle">
+          <Form.Label>Title</Form.Label>
+          <Form.Control
+            id="title"
+            type="text"
+            placeholder="Enter title"
+            value={newBlog.title}
+            onChange={handleChangeTitle}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicAuthor">
+          <Form.Label>author</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter Author"
+            value={newBlog.author}
+            onChange={handleChangeAuthor}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicUrl">
+          <Form.Label>url</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter Url"
+            value={newBlog.url}
+            onChange={handleChangeUrl}
+          />
+        </Form.Group>
+        <Button variant="success" type="submit">Create</Button>
+      </Form>
     </div>
   )
 }
