@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
 import { useHistory } from 'react-router-dom'
 import { blogUrls } from '../utils/urls'
+import { Form, Button } from 'react-bootstrap'
+
 function Login(){
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -29,23 +31,32 @@ function Login(){
     }
   }
   return(
-    <div>
-      <div>
-        <h1>Log in to application</h1>
+    <div className="row">
+      <div className="col align-items-center">
+        <h2>Log in to application</h2>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Username</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter username"
+              onChange={handleChangeUsername}
+              value={username}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              onChange={handleChangePassword}
+              value={password}
+            />
+          </Form.Group>
+          <Button variant="primary" type="submit">Login</Button>
+        </Form>
       </div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>username</label>
-          <input type="text"  value={username} onChange={handleChangeUsername}/>
-        </div>
-        <div>
-          <label>password</label>
-          <input type="password"  value={password} onChange={handleChangePassword}/>
-        </div>
-        <div>
-          <button>Login</button>
-        </div>
-      </form>
     </div>
   )
 
