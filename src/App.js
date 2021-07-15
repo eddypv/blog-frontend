@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import Blogs from './components/Blogs'
+import Blog from './components/Blog'
 import blogService from './services/blogs'
 import Login from './components/Login'
 import AddBlog from './components/AddBlog'
@@ -19,18 +20,19 @@ const App = () => {
   const users = useSelector(state => state.user.users)
   const blogs = useSelector(state => state.blogs)
   const userBlogsMatch = useRouteMatch('/users/:userId')
+  const blogMatch = useRouteMatch('/blogs/:blogId')
   const userBlogs = userBlogsMatch ? users.find(item => item.id === userBlogsMatch.params.userId): null
+  const blog = blogMatch ? blogs.find(item => item.id === blogMatch.params.blogId) :null
+
   useEffect(() => {
     const userLocal = JSON.parse(window.localStorage.getItem('AppBlogList'))
     if(userLocal !== null){
       blogService.setToken(userLocal.token)
-      dispatch(initBlogs())
       dispatch(setUser(userLocal))
+      dispatch(initBlogs())
       dispatch(getUsers())
     }
   }, [])
-
-
   return (
 
     <div>
@@ -53,6 +55,9 @@ const App = () => {
                 </Route>
                 <Route path='/users'>
                   <Users users={users}/>
+                </Route>
+                <Route path='/blogs/:blogId'>
+                  <Blog blog={blog} user={user}/>
                 </Route>
                 <Route path='/'>
                   <Togglable showText="create new blog" closeText="Close">

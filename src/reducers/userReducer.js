@@ -17,7 +17,7 @@ export const userReducer = (state = initial, action) => {
   }
   case userActions.GET_USERS: {
     return {
-      userLoggedIn: { ...state.user },
+      userLoggedIn: { ...state.userLoggedIn },
       users:[...action.payload.users]
     }
   }

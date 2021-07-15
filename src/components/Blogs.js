@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 
 function Blogs({ blogs }){
 
-  //const dispatch = useDispatch()
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -13,24 +12,8 @@ function Blogs({ blogs }){
     marginBottom: 5
   }
   /*
-  const handleSetLikes = (id, likes) => {
-    try{
-      dispatch(setLikes(id, likes))
-    }catch(error){
-      dispatch(setNotification(error.message,'error'))
-    }
-  }
 
-  const handleRemove = async(id, title, author) => {
-    try{
-      if(window.confirm(`Remove blog ${title} by ${author}`)){
-        dispatch(removeBlog(id))
-        dispatch(setNotification('The blog was delete','success'))
-      }
-    }catch(error){
-      dispatch(setNotification(error.message,'error'))
-    }
-  }*/
+  */
   return (
     <div >
       <div >
@@ -52,7 +35,7 @@ function Blogs({ blogs }){
             handleRemove={handleRemove}*/
           return(
             <div key={item.id} style={blogStyle}>
-              <Link to="">{item.title} {item.author}</Link>
+              <Link to={`/blogs/${item.id}`}>{item.title} {item.author}</Link>
             </div>
           )
         })}

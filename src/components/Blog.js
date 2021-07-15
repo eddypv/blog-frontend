@@ -1,50 +1,56 @@
-import React, { useState } from 'react'
+import React from 'react'
 import propType from 'prop-types'
+import { useDispatch } from 'react-redux'
+import { setLikes,removeBlog } from '../reducers/blogReducer'
+import { setNotification } from '../reducers/notificationReducer'
 
-const Blog = ({ id,title, author, url='', likes=0, userBlog={}, user={}, handleSetLikes, handleRemove }) => {
-  const [viewDetail, setViewDetail] = useState(false)
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
+const Blog = ({ blog={}, user={} }) => {
+  let userBlog ={}
+  const dispatch = useDispatch()
+
+  const handleSetLikes = () => {
+    try{
+      dispatch(setLikes(blog.id, blog.likes+1))
+    }catch(error){
+      dispatch(setNotification(error.message,'error'))
+    }
   }
-  const show = { display:'inline-block' }
-  const hide= { display:'none' }
 
-  const handleToggle = () => setViewDetail(!viewDetail)
-
-
-  return (
-    <div style={blogStyle} className="Blog-item">
-      <div>
-        <div>{title} {author}<button className="button-show-hide" onClick={handleToggle}> {viewDetail ? 'hide': 'view'}</button></div>
-        <div style={viewDetail ? show : hide}>
-          <p>{title}</p>
-          <p>{author}</p>
-          <p>{url}</p>
-          <p data-testid="Blog-likes"><span>{likes}</span> <button className="button-likes" onClick={() => handleSetLikes(id,likes+1)}>like</button></p>
-          <p>{userBlog.name || ''}</p>
-          {userBlog.username === user.username && <button onClick={() => handleRemove(id, title, author) }>Remove</button>}
+  const handleRemove = async(id, title, author) => {
+    try{
+      if(window.confirm(`Remove blog ${title} by ${author}`)){
+        dispatch(removeBlog(id))
+        dispatch(setNotification('The blog was delete','success'))
+      }
+    }catch(error){
+      dispatch(setNotification(error.message,'error'))
+    }
+  }
+  if(!blog){
+    return null
+  }
+  if(blog){
+    if(blog.user){
+      userBlog= blog.user
+    }
+    return (
+      <div className="Blog-item">
+        <div>
+          <div >
+            <h2>{blog.title} {blog.author}</h2>
+            <a href={blog.url}>{blog.url}</a>
+            <p data-testid="Blog-likes"><span>{blog.likes}</span> <button className="button-likes" onClick={handleSetLikes}>like</button></p>
+            <p>added by {userBlog.name || ''}</p>
+            {userBlog.username === user.username && <button onClick={() => handleRemove(blog.id, blog.title, blog.author) }>Remove</button>}
+          </div>
         </div>
-
-
       </div>
-      <div></div>
-    </div>
-  )
+    )
+  }
+
 }
 Blog.propTypes ={
-  id:propType.string.isRequired,
-  title:propType.string.isRequired,
-  author:propType.string.isRequired,
-  url: propType.string,
-  likes: propType.number,
-  userBlog:propType.object,
-  user:propType.object,
-  handleSetLikes:propType.func,
-  handleRemove:propType.func
-
+  blog:propType.object,
+  user:propType.object
 }
 export default Blog
