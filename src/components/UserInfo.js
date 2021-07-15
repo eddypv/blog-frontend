@@ -1,6 +1,11 @@
 import React from 'react'
-
-const  UserInfo = ({ user, handleLogout }) => {
+import { useDispatch } from 'react-redux'
+import { logout } from '../reducers/userReducer'
+const  UserInfo = ({ user }) => {
+  const dispatch = useDispatch()
+  const handleLogout = () => {
+    dispatch(logout())
+  }
   if(user === null)
     return null
 

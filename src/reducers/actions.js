@@ -7,3 +7,8 @@ export const blogActions ={
   REMOVE:'@blog/remove',
   ADD:'@blog/add'
 }
+export const userActions = {
+  SET:'@user/set',
+  LOGIN:'@user/login',
+  LOGOUT:'@user/logout',
+}
