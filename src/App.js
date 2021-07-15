@@ -7,57 +7,60 @@ import Notification from './components/Notification'
 import UserInfo from './components/UserInfo'
 import Togglable  from './components/Togglable'
 import { useSelector, useDispatch } from 'react-redux'
-import { setUser } from './reducers/userReducer'
-import { Route, BrowserRouter, Switch } from 'react-router-dom'
+import { setUser, getUsers } from './reducers/userReducer'
+import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import Users from './components/Users'
+import UserBlogs from './components/UserBlogs'
 
 const App = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user.userLoggedIn)
-
+  const users = useSelector(state => state.user.users)
+  const userBlogsMatch = useRouteMatch('/users/:userId')
+  const userBlogs = userBlogsMatch ? users.find(item => item.id === userBlogsMatch.params.userId): null
   useEffect(() => {
     const userLocal = JSON.parse(window.localStorage.getItem('AppBlogList'))
     if(userLocal !== null){
       blogService.setToken(userLocal.token)
       dispatch(setUser(userLocal))
+      dispatch(getUsers())
     }
   }, [])
 
 
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path='/users'>
-          <Users />
-        </Route>
-        <Route path='/'>
-          <div>
-            <h2>blogs</h2>
-            {
-              user === null &&
+
+    <div>
+      <h2>blogs</h2>
+      {
+        user === null &&
             <div>
               <Notification />
               <Login/>
             </div>
-
-            }
-            {
-              user !== null &&
+      }
+      {
+        user !== null &&
             <div>
               <Notification />
               <UserInfo />
-              <Togglable showText="create new blog" closeText="Close">
-                <AddBlog/>
-              </Togglable>
-              <Blogs
-                user={user}
-              />
+              <Switch>
+                <Route path='/users/:userId'>
+                  <UserBlogs userBlogs={userBlogs} />
+                </Route>
+                <Route path='/users'>
+                  <Users users={users}/>
+                </Route>
+                <Route path='/'>
+                  <Togglable showText="create new blog" closeText="Close">
+                    <AddBlog/>
+                  </Togglable>
+                  <Blogs user={user}/>
+                </Route>
+              </Switch>
             </div>
-            }
-          </div>
-        </Route>
-      </Switch>
-    </BrowserRouter>
+      }
+    </div>
 
   )
 }
