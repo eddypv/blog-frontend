@@ -42,7 +42,7 @@ const AddBlog = () => {
     <div>
       <h2>Create New</h2>
       <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formBasicTitle">
+        <Form.Group className="mb-3" >
           <Form.Label>Title</Form.Label>
           <Form.Control
             id="title"
@@ -53,7 +53,7 @@ const AddBlog = () => {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicAuthor">
+        <Form.Group className="mb-3" >
           <Form.Label>author</Form.Label>
           <Form.Control
             type="text"
@@ -62,7 +62,7 @@ const AddBlog = () => {
             onChange={handleChangeAuthor}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicUrl">
+        <Form.Group className="mb-3" >
           <Form.Label>url</Form.Label>
           <Form.Control
             type="text"
