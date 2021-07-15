@@ -1,10 +1,27 @@
 import { userActions } from './actions'
 import loginService from '../services/login'
 import blogService from '../services/blogs'
-export const userReducer = (state = null, action) => {
+import userService from '../services/user'
+
+const initial ={
+  userLoggedIn:null,
+  users:[]
+}
+export const userReducer = (state = initial, action) => {
   switch(action.type){
-  case userActions.SET:
-    return action.payload.user
+  case userActions.SET:{
+    return {
+      userLoggedIn: { ...action.payload.user },
+      users:[...state.users]
+    }
+  }
+  case userActions.GET_USERS: {
+    return {
+      userLoggedIn: { ...state.user },
+      users:[...action.payload.users]
+    }
+  }
+
   default: return state
   }
 }
@@ -19,6 +36,7 @@ export const login=(username, password) => {
   return async dispatch => {
     const user = await loginService.login(username, password)
     blogService.setToken(user.token)
+    userService.setToken(user.token)
     window.localStorage.setItem('AppBlogList', JSON.stringify(user))
     await dispatch({
       type:userActions.SET,
@@ -32,5 +50,16 @@ export const logout = () => {
   return {
     type:userActions.SET,
     payload:{ user:null }
+  }
+}
+export const getUsers = () => {
+  return async dispatch => {
+    const users = await userService.getAll()
+    dispatch({
+      type:userActions.GET_USERS,
+      payload :{
+        users
+      }
+    })
   }
 }

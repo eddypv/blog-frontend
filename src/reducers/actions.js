@@ -11,4 +11,5 @@ export const userActions = {
   SET:'@user/set',
   LOGIN:'@user/login',
   LOGOUT:'@user/logout',
+  GET_USERS:'@user/get_users'
 }
