@@ -31,6 +31,7 @@ const Blog = ({ blog, user={} }) => {
     return null
   }
   if(blog){
+
     if(blog.user){
       userBlog= blog.user
     }
@@ -47,6 +48,10 @@ const Blog = ({ blog, user={} }) => {
             <Card.Link href={blog.url}>Go to Url</Card.Link>
           </Card.Body>
         </Card>
+        <h3>Comments</h3>
+        <ul>
+          {blog.comments.map(item => <li key={item.id}>{item.content}</li> )}
+        </ul>
       </div>
     )
   }
