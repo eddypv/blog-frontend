@@ -43,7 +43,7 @@ const Blog = ({ blog, user={} }) => {
             <Card.Subtitle className="mb-2 text-muted">added by {userBlog.name || ''}</Card.Subtitle>
             <Card.Text>
               {blog.likes} <Button variant="primary" onClick={handleSetLikes} >Like</Button>
-              {userBlog.username === user.username && <button onClick={() => handleRemove(blog.id, blog.title, blog.author) }>Remove</button>}
+              {userBlog.username === user.username && <Button variant="danger" onClick={() => handleRemove(blog.id, blog.title, blog.author) }>Remove</Button>}
             </Card.Text>
             <Card.Link href={blog.url}>Go to Url</Card.Link>
           </Card.Body>
