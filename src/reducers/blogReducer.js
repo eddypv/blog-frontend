@@ -29,6 +29,16 @@ export const blogReducer = (state=[], action) => {
   case blogActions.ADD:{
     return state.concat(action.payload.blog)
   }
+
+  case blogActions.ADD_COMMENT:{
+
+    return state.map( blog => {
+      if(blog.id === action.payload.comment.blog){
+        blog.comments = blog.comments.concat(action.payload.comment)
+      }
+      return blog
+    })
+  }
   default: return state
   }
 
@@ -80,3 +90,17 @@ export const addBlog = (blog) => {
     })
   }
 }
+
+export const addComment = (blogId, comment) => {
+  return async dispatch => {
+    const commentCreated = await blogService.addComment(blogId, comment)
+    dispatch({
+      type:blogActions.ADD_COMMENT,
+      payload:{
+        comment:commentCreated
+      }
+    })
+  }
+}
+
+

@@ -64,9 +64,33 @@ const removeBlog = async (id) => {
     }
   }
 }
+const addComment = async(blogId, comment) => {
 
+  try{
+    const response = await axios.post(`${baseUrl}/${blogId}/comments`, comment ,getConfig())
+    return response.data
+  }catch(error){
+    handleError(error)
+  }
+}
+
+const getConfig = () => {
+  const config = {
+    headers:{
+      Authorization:`Bearer ${token}`
+    }
+  }
+  return config
+}
+const handleError =(error) => {
+  if(error.response.data.error){
+    throw new Error(error.response.data.error)
+  }else{
+    throw new Error('service Add blog has errors')
+  }
+}
 const setToken = (newToken) => {
   token = newToken
 }
-const services ={ getAll, setToken, AddBlog, setLikes, removeBlog }
+const services ={ getAll, setToken, AddBlog, setLikes, removeBlog, addComment }
 export default services

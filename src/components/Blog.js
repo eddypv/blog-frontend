@@ -4,6 +4,8 @@ import { useDispatch } from 'react-redux'
 import { setLikes,removeBlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import { Card, Button } from 'react-bootstrap'
+import AddComment from './AddComment'
+import Comments from './Comments'
 
 const Blog = ({ blog, user={} }) => {
   let userBlog ={}
@@ -49,9 +51,8 @@ const Blog = ({ blog, user={} }) => {
           </Card.Body>
         </Card>
         <h3>Comments</h3>
-        <ul>
-          {blog.comments.map(item => <li key={item.id}>{item.content}</li> )}
-        </ul>
+        <AddComment blogId={blog.id} />
+        <Comments comments={blog.comments}/>
       </div>
     )
   }

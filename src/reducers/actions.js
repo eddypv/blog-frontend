@@ -5,7 +5,8 @@ export const blogActions ={
   INIT_BLOGS:'@blog/init',
   SET_LIKES:'@blog/set_likes',
   REMOVE:'@blog/remove',
-  ADD:'@blog/add'
+  ADD:'@blog/add',
+  ADD_COMMENT:'@blog/add_comment'
 }
 export const userActions = {
   SET:'@user/set',
